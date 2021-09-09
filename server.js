@@ -4,7 +4,7 @@ const { Server } = require("socket.io");
 
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -15,10 +15,23 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.emit("welcome", "hello");
-
   socket.on("message", ({ name, message }) => {
     io.emit("message", { name, message });
+  });
+
+  socket.on("join room", (roomId) => {
+    socket.join(roomId);
+    socket.to(roomId).emit("welcome");
+  });
+
+  socket.on("send draw", (data) => {
+    const { offsetX, offsetY, isDrawing, roomId } = data;
+    const sendingData = {
+      offsetX,
+      offsetY,
+      isDrawing,
+    };
+    socket.to(roomId).emit("receive draw", sendingData);
   });
 });
 
