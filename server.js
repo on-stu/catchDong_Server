@@ -10,12 +10,10 @@ const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 });
-
-io.origins("*:*");
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
