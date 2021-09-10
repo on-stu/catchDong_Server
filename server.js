@@ -44,4 +44,6 @@ io.on("connection", (socket) => {
   });
 });
 
+app.use("/", express.static(__dirname + "/public"));
+
 server.listen(PORT, () => console.log("Server is running on ", PORT, "port"));
