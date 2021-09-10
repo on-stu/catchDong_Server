@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
   next();
 });
 app.use(cors());
-
+io.use(cors());
 io.on("connection", (socket) => {
   socket.on("message", ({ name, message }) => {
     io.emit("message", { name, message });
