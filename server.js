@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://catchdong.netlify.app/"],
+    origin: ["http://localhost:3000", "https://catchdong.netlify.app"],
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
