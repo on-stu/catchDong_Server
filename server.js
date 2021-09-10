@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*:*",
+    origin: "*",
   },
 });
 
@@ -24,8 +24,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.use(cors());
-io.use(cors());
+
 io.on("connection", (socket) => {
   socket.on("message", ({ name, message }) => {
     io.emit("message", { name, message });
