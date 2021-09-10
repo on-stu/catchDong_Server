@@ -1,5 +1,6 @@
 const express = require("express");
 const http = require("http");
+const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
@@ -7,18 +8,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const server = http.createServer(app);
-const io = require("socket.io")(server, {
-  origins: ["*"],
-
-  // optional, useful for custom headers
-  handlePreflightRequest: (req, res) => {
-    res.writeHead(200, {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,POST",
-      "Access-Control-Allow-Headers": "my-custom-header",
-      "Access-Control-Allow-Credentials": true,
-    });
-    res.end();
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
   },
 });
 
