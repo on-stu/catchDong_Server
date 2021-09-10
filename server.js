@@ -8,11 +8,17 @@ const PORT = process.env.PORT || 3001;
 
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
-  cors: {
-    origin: "https://example.com",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true,
+  origins: ["*"],
+
+  // optional, useful for custom headers
+  handlePreflightRequest: (req, res) => {
+    res.writeHead(200, {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST",
+      "Access-Control-Allow-Headers": "my-custom-header",
+      "Access-Control-Allow-Credentials": true,
+    });
+    res.end();
   },
 });
 
